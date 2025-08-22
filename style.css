@@ -15,7 +15,7 @@ body {
 
   /* Background image + fallback color */
   background-color: #ffccd5; /* Romantic pink fallback */
-  background-image: url('image/image2.jpg'); /* Tumhari image path */
+  background-image: url('image/image.jpg'); /* Tumhari image path */
   background-size: cover;      /* Image screen pe fully cover ho */
   background-position: center; /* Center align image */
   background-repeat: no-repeat;
