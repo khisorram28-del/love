@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reel Style Quiz</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+
+    body {
+      font-family: Arial, sans-serif;
+      color: white;
+      text-align: center;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    /* Background video */
+    #bg-video {
+      position: fixed;
+      top:0; left:0;
+      width:100%; height:100%;
+      object-fit: cover;
+      z-index: -1;
+      filter: brightness(0.6);
+    }
+
+    /* Content Box */
+    .container {
+      z-index:1;
+      position: relative;
+      background: rgba(0,0,0,0.4);
+      padding: 40px 60px;
+      border-radius: 15px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+      animation: fadeIn 1s ease;
+      max-width: 90%;
+    }
+
+    .container h2 {
+      font-size: 2rem;
+      margin: 15px 0;
+      background: linear-gradient(45deg, #ff00ff, #00ffff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .cat {
+      width: 150px;
+      margin-bottom: 20px;
+    }
+
+    .buttons { margin-top: 20px; }
+
+    button {
+      padding: 10px 25px;
+      margin: 0 10px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .yes { background: #ff4d88; color:#fff; }
+    .no { background: #ccc; }
+
+    button:hover { transform: scale(1.05); }
+
+    .hidden { display: none; }
+    .success { font-size: 24px; color: #ff3366; font-weight: bold; }
+
+    @keyframes fadeIn {
+      from { opacity:0; transform: translateY(20px); }
+      to { opacity:1; transform: translateY(0); }
+    }
+
+    /* Mobile responsiveness */
+    @media (max-width: 480px) {
+      .container {
+        padding: 20px 30px;
+      }
+
+      .container h2 {
+        font-size: 1.5rem;
+      }
+
+      .cat {
+        width: 120px;
+      }
+
+      button {
+        padding: 8px 20px;
+        font-size: 14px;
+        margin: 5px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+
+  <div class="container">
+    <!-- GIF -->
+    <img id="gif" src="" alt="Cute GIF" class="cat">
+
+    <!-- Question -->
+    <h2 id="question"></h2>
+
+    <div class="buttons">
+      <button class="yes" onclick="sayYes()">Yes</button>
+      <button class="no" onclick="nextQuestion()">No</button>
+    </div>
+
+    <div id="result" class="hidden success">❤️ I knew it! Love accepted ❤️</div>
+  </div>
+
+  <script>
+    // ==========================
+    // Questions + Corresponding GIFs
+    // ==========================
+    const data = [
+      { q: "Do you love me? 🥰", gif: "image/catmiss3.gif" },
+      { q: "Please think again 🙏", gif: "image/cat4.gif" },
+      { q: "Ek aur baar soch lo 🤔", gif: "image/cat5.gif" },
+      { q: "suglaa man jao, kai bhav khaov 😘", gif: "image/catkiss2.gif" }
+    ];
+
+    let current = 0;
+
+    // ==========================
+    // Load Sounds
+    // ==========================
+    const yesSound = new Audio("sounds/yes.mp3");
+    const noSound = new Audio("sounds/no.mp3");
+
+    // ==========================
+    // Update Question & GIF
+    // ==========================
+    function updateContent() {
+      const questionEl = document.getElementById("question");
+      const gifEl = document.getElementById("gif");
+      const noBtn = document.querySelector(".no");
+
+      questionEl.textContent = data[current].q;
+      gifEl.src = data[current].gif;
+
+      // Fade-in animation for GIF
+      gifEl.style.opacity = 0;
+      setTimeout(() => { gifEl.style.transition = "opacity 0.5s"; gifEl.style.opacity = 1; }, 50);
+
+      // Hide "No" button on last question
+      if(current === data.length - 1){
+        noBtn.style.display = "none";
+      } else {
+        noBtn.style.display = "inline-block"; // show for other questions
+      }
+    }
+
+    // ==========================
+    // "No" button click
+    // ==========================
+    function nextQuestion() {
+      noSound.play();  // play sound
+
+      current++;
+      if (current < data.length) {
+        updateContent();
+      } else {
+        endQuiz();
+      }
+    }
+
+    // ==========================
+    // "Yes" button click
+    // ==========================
+    function sayYes() {
+      yesSound.play();  // play sound
+      endQuiz();
+    }
+
+    // ==========================
+    // End Quiz: Hide content & show result
+    // ==========================
+    function endQuiz() {
+      document.getElementById("question").classList.add("hidden");
+      document.getElementById("gif").classList.add("hidden");
+      document.querySelector(".buttons").classList.add("hidden");
+      document.getElementById("result").classList.remove("hidden");
+    }
+
+    // ==========================
+    // Initial load
+    // ==========================
+    window.onload = updateContent;
+  </script>
+
+</body>
+</html>

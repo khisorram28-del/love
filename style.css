@@ -1,0 +1,93 @@
+* { 
+  margin: 0; 
+  padding: 0; 
+  box-sizing: border-box; 
+}
+body {
+  font-family: Arial, sans-serif;
+  color: white;
+  text-align: center;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+
+  /* Background image + fallback color */
+  background-color: #ffccd5; /* Romantic pink fallback */
+  background-image: url('image/image2.jpg'); /* Tumhari image path */
+  background-size: cover;      /* Image screen pe fully cover ho */
+  background-position: center; /* Center align image */
+  background-repeat: no-repeat;
+}
+
+.container {
+  z-index:1;
+  position: relative;
+  background: rgba(0,0,0,0.4);
+  padding: 40px 60px;
+  border-radius: 15px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 0 20px rgba(0,0,0,0.5);
+  animation: fadeIn 1s ease;
+  max-width: 90%;
+}
+
+.container h2 {
+  font-size: 2rem;
+  margin: 15px 0;
+  color: #ffffff; /* Plain white color for text + emoji */
+  -webkit-background-clip: unset;
+  -webkit-text-fill-color: unset;
+}
+
+.cat {
+  width: 150px;
+  margin-bottom: 20px;
+}
+
+.buttons { margin-top: 20px; }
+
+button {
+  padding: 10px 25px;
+  margin: 0 10px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.yes { background: #ff4d88; color:#fff; }
+.no { background: #ccc; }
+
+button:hover { transform: scale(1.05); }
+
+.hidden { display: none; }
+.success { font-size: 24px; color: #ff3366; font-weight: bold; }
+
+@keyframes fadeIn {
+  from { opacity:0; transform: translateY(20px); }
+  to { opacity:1; transform: translateY(0); }
+}
+
+/* Mobile responsiveness */
+@media (max-width: 480px) {
+  .container {
+    padding: 20px 30px;
+  }
+
+  .container h2 {
+    font-size: 1.5rem;
+  }
+
+  .cat {
+    width: 120px;
+  }
+
+  button {
+    padding: 8px 20px;
+    font-size: 14px;
+    margin: 5px;
+  }
+}
